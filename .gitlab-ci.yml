@@ -2,6 +2,7 @@ stages:
   - install
   - build
   - test
+  - build_docker
 
 Npm ci:
   stage: install
@@ -38,3 +39,19 @@ Test:
     key: $CI_COMMIT_REF_SLUG
     paths:
       - "frontend/node_modules"  
+
+Build docker:
+  stage: build_docker
+  service: 
+    - docker:dind
+  image: docker
+  variables: 
+    IMAGE_NAME: alexeistel/result-frontend
+  only: 
+    -master  
+  script:
+    - docker login -u alexeistel@gmail.com -p ${DOCKER_PWD}
+    - docker build -f frontend.Dockerfile -t ${IMAGE_NAME} .
+    - docker push ${IMAGE_NAME}
+
+  
