@@ -30,4 +30,4 @@ services:
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done'"
     volumes:
       - ./certbot/www:/var/www/certbot
-      - ./certbot/data:/etc/letsencrypt
+      - ./certbot/data:/etc/letsencrypt 
